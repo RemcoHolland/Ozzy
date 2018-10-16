@@ -1,0 +1,100 @@
+//
+// Created by Remco on 10/11/2018.
+//
+
+#ifndef OZZY_BOARD_H
+#define OZZY_BOARD_H
+
+#pragma once
+#include <cstdint>
+#include <string>
+#include "piece.h"
+#include "move.h"
+#include "color.h"
+#include "moveinfo.h"
+#include "castling.h"
+#include "feninfo.h"
+
+using std::string;
+
+class Board {
+
+public:
+    static const int RANKS = 8;
+    static const int FILES = 8;
+    static const int SQUARES = RANKS * FILES;
+    static const uint64_t RANK_1 = 255U;
+    static const uint64_t RANK_2 = 65280U;
+    static const uint64_t RANK_4 = 4278190080U;
+    static const uint64_t RANK_5 = 1095216660480U;
+    static const uint64_t RANK_7 = 71776119061217280U;
+    static const uint64_t RANK_8 = 18374686479671623680U;
+    static const uint64_t FILE_1 = 72340172838076673U;
+    static const uint64_t FILE_8 = 9259542123273814144U;
+
+    static const uint64_t A1 = 1U;
+    static const uint64_t B1 = 2U;
+    static const uint64_t C1 = 4U;
+    static const uint64_t D1 = 8U;
+    static const uint64_t E1 = 16U;
+    static const uint64_t F1 = 32U;
+    static const uint64_t G1 = 64U;
+    static const uint64_t H1 = 128U;
+    static const uint64_t A8 = 72057594037927936U;
+    static const uint64_t H8 = 9223372036854775808U;
+
+    static const uint64_t KING_SIDE_SQUARES = F1 | G1;
+    static const uint64_t QUEEN_SIDE_SQUARES = B1 | C1 | D1;
+
+    Board(FenInfo);
+    uint64_t getPiece(int);
+    uint64_t getOccupiedBB();
+    uint64_t getColorBB(int);
+    uint64_t getKnightMoves(int);
+    uint64_t getKingMoves(int);
+    uint64_t getEnpassantSquare();
+    int getCastlingRights();
+    MoveInfo makeMove(int, Move);
+    void unmakeMove(int, Move, MoveInfo);
+    ~Board();
+
+private:
+    int castling_rights;
+    uint64_t occupiedBB;
+    uint64_t colorBB[2] = { 0 };
+    uint64_t enpassant_square = 0;
+    uint64_t piece_list[TOTAL_PIECES];
+
+    //TODO: init pawn moves;
+    const uint64_t PAWN_MOVES[64] = {
+
+    };
+
+    const uint64_t KNIGHT_MOVES[64] = {
+            132096U,				329728U,				659712U,				 1319424U,			  2638848U,			   5277696U,				10489856U,			  4202496U,
+            33816580U,			84410376U,			168886289U,			 337772578U,			  675545156U,		   1351090312U,			2685403152U,			  1075839008U,
+            8657044482U,		    21609056261U,		43234889994U,		 86469779988U,		  172939559976U,		   345879119952U,		687463207072U,		  275414786112U,
+            2216203387392U,	    5531918402816U,		11068131838464U,		 22136263676928U,	  44272527353856U,	   88545054707712U,		175990581010432U,	  70506185244672U,
+            567348067172352U,	1416171111120896U,	2833441750646784U,	 5666883501293568U,	  11333767002587136U,   22667534005174272U,   45053588738670592U,	  18049583422636032U,
+            145241105196122112U,	362539804446949376U, 725361088165576704U,	 1450722176331153408U, 2901444352662306816U, 5802888705324613632U, 11533718717099671552U, 4620693356194824192U,
+            288234782788157440U, 576469569871282176U, 1224997833292120064U, 2449995666584240128U, 4899991333168480256U, 9799982666336960512U, 1152939783987658752U,  2305878468463689728U,
+            1128098930098176U,   2257297371824128U,	4796069720358912U,	 9592139440717824U,	  19184278881435648U,   38368557762871296U,	4679521487814656U,	  9077567998918656U
+    };
+
+    const uint64_t KING_MOVES[64] = {
+            770U,				1797U,				3594U,				 7188U,				  14376U,			   28752,				57504U,				  49216U,
+            197123U,				460039U,				920078U,				 1840156U,			  3680312U,			   7360624U,				14721248U,			  12599488U,
+            50463488U,			117769984U,			235539968U,			 471079936U,			  942159872U,		   1884319744U,			3768639488U,			  3225468928U,
+            12918652928U,		30149115904U,		60298231808U,		 120596463616U,		  241192927232U,		   482385854464U,		964771708928U,		  825720045568U,
+            3307175149568U,		7718173671424U,		15436347342848U,		 30872694685696U,	  61745389371392U,	   123490778742784U,		246981557485568U,	  211384331665408U,
+            846636838289408U,	1975852459884544U,	3951704919769088U,	 7903409839538176U,	  15806819679076352U,   31613639358152704U,	63227278716305408U,	  54114388906344448U,
+            216739030602088448U, 505818229730443264U, 1011636459460886528U, 2023272918921773056U, 4046545837843546112U, 8093091675687092224U, 16186183351374184448U, 13853283560024178688U,
+            144959613005987840U, 362258295026614272U, 724516590053228544U,	 1449033180106457088U, 2898066360212914176U, 5796132720425828352U, 11592265440851656704U, 4665729213955833856U
+    };
+
+    void init(FenInfo);
+    void setEnPassantSquare(int, Move);
+    void setCastlingRights(int, uint64_t, uint64_t);
+};
+
+#endif //OZZY_BOARD_H
