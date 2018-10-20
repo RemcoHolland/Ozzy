@@ -91,7 +91,8 @@ void Movelist::whitePawnsPush(Board board) {
 }
 
 void Movelist::whitePawnsDoublePush(Board board) {
-    uint64_t to_squares = ((((board.getPiece(WHITE_PAWN) & Board::RANK_2) << 8) & ~board.getOccupiedBB()) << 8) & ~board.getOccupiedBB();
+    uint64_t to_squares = ((((board.getPiece(WHITE_PAWN) & Board::RANK_2) << 8) & ~board.getOccupiedBB()) << 8) &
+                          ~board.getOccupiedBB();
     uint64_t from_squares = to_squares >> 16;
 
     addPawnMoves(WHITE, WHITE_PAWN, from_squares, to_squares, Flag::DOUBLE_PUSH);
@@ -115,7 +116,8 @@ void Movelist::whitePawnsEnpassant(Board board) {
     uint64_t enpassant_square = board.getEnpassantSquare();
 
     if (enpassant_square != 0) {
-        uint64_t from_squares = ((enpassant_square >> 9) | (enpassant_square >> 7)) & board.getPiece(WHITE_PAWN) & Board::RANK_5;
+        uint64_t from_squares =
+                ((enpassant_square >> 9) | (enpassant_square >> 7)) & board.getPiece(WHITE_PAWN) & Board::RANK_5;
 
         addEnPassantMoves(WHITE_PAWN, from_squares, enpassant_square);
     }
@@ -129,7 +131,8 @@ void Movelist::blackPawnsPush(Board board) {
 }
 
 void Movelist::blackPawnsDoublePush(Board board) {
-    uint64_t to_squares = ((((board.getPiece(BLACK_PAWN) & Board::RANK_7) >> 8) & ~board.getOccupiedBB()) >> 8) & ~board.getOccupiedBB();
+    uint64_t to_squares = ((((board.getPiece(BLACK_PAWN) & Board::RANK_7) >> 8) & ~board.getOccupiedBB()) >> 8) &
+                          ~board.getOccupiedBB();
     uint64_t from_squares = to_squares << 16;
 
     addPawnMoves(BLACK, BLACK_PAWN, from_squares, to_squares, Flag::DOUBLE_PUSH);
@@ -153,7 +156,8 @@ void Movelist::blackPawnsEnpassant(Board board) {
     uint64_t enpassant_square = board.getEnpassantSquare();
 
     if (enpassant_square != 0) {
-        uint64_t from_squares = ((enpassant_square << 9) | (enpassant_square << 7)) & board.getPiece(BLACK_PAWN) & Board::RANK_4;
+        uint64_t from_squares =
+                ((enpassant_square << 9) | (enpassant_square << 7)) & board.getPiece(BLACK_PAWN) & Board::RANK_4;
 
         addEnPassantMoves(BLACK_PAWN, from_squares, enpassant_square);
     }
@@ -243,7 +247,8 @@ void Movelist::whiteQueenMoves(Board board) {
     while (queens != 0) {
         uint64_t from = Utils::getLSB(queens);
         int from_nr = Utils::getLS1B(from);
-        uint64_t to_squares = (Bmagic(from_nr, board.getOccupiedBB()) | Rmagic(from_nr, board.getOccupiedBB())) & ~board.getColorBB(WHITE);
+        uint64_t to_squares = (Bmagic(from_nr, board.getOccupiedBB()) | Rmagic(from_nr, board.getOccupiedBB())) &
+                              ~board.getColorBB(WHITE);
 
         addPieceMoves(WHITE_QUEEN, from, to_squares, board.getColorBB(BLACK));
         queens = Utils::clearLSB(queens);
@@ -256,7 +261,8 @@ void Movelist::blackQueenMoves(Board board) {
     while (queens != 0) {
         uint64_t from = Utils::getLSB(queens);
         int from_nr = Utils::getLS1B(from);
-        uint64_t to_squares = (Bmagic(from_nr, board.getOccupiedBB()) | Rmagic(from_nr, board.getOccupiedBB())) & ~board.getColorBB(BLACK);
+        uint64_t to_squares = (Bmagic(from_nr, board.getOccupiedBB()) | Rmagic(from_nr, board.getOccupiedBB())) &
+                              ~board.getColorBB(BLACK);
 
         addPieceMoves(BLACK_QUEEN, from, to_squares, board.getColorBB(WHITE));
         queens = Utils::clearLSB(queens);
@@ -289,7 +295,8 @@ void Movelist::castling(int color, Board board) {
             uint64_t king_square = board.getPiece(king);
 
             // TODO: delay isAttacked to the search algorithm
-            if (!(Square::isAttacked(color, board, king_square) || (Square::isAttacked(color, board, king_square << 1)))) {
+            if (!(Square::isAttacked(color, board, king_square) ||
+                  (Square::isAttacked(color, board, king_square << 1)))) {
                 Move move = Move(king, king_square, king_square << 2, Flag::CASTLING);
                 moves.push_back(move);
             }
@@ -301,7 +308,8 @@ void Movelist::castling(int color, Board board) {
             int king = WHITE_KING + color * NR_PIECES;
             uint64_t king_square = board.getPiece(king);
 
-            if (!(Square::isAttacked(color, board, king_square) || (Square::isAttacked(color, board, king_square >> 1)))) {
+            if (!(Square::isAttacked(color, board, king_square) ||
+                  (Square::isAttacked(color, board, king_square >> 1)))) {
                 Move move = Move(king, king_square, king_square >> 2, Flag::CASTLING);
                 moves.push_back(move);
             }

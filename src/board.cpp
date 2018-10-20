@@ -63,12 +63,14 @@ MoveInfo Board::makeMove(int color, Move move) {
         uint64_t king_from = move.getFrom();
         uint64_t king_to = move.getTo();
         if (king_from < king_to) { // castling short
-            uint64_t rook_shift = (king_to << 1) - (king_from << 1); // difference between rook_to (king_to << 1) and rook_from (king_from << 1) position
+            uint64_t rook_shift = (king_to << 1) - (king_from
+                    << 1); // difference between rook_to (king_to << 1) and rook_from (king_from << 1) position
             occupiedBB -= rook_shift;
             colorBB[color] -= rook_shift;
             piece_list[WHITE_ROOK + color * NR_PIECES] -= rook_shift;
         } else { // castling long
-            uint64_t rook_shift = (king_from >> 1) - (king_to >> 2); // difference between rook_to (king_from >> 1) and rook_from (king_to >> 2) position
+            uint64_t rook_shift = (king_from >> 1) - (king_to
+                    >> 2); // difference between rook_to (king_from >> 1) and rook_from (king_to >> 2) position
             occupiedBB += rook_shift;
             colorBB[color] += rook_shift;
             piece_list[WHITE_ROOK + color * NR_PIECES] += rook_shift;
@@ -91,7 +93,6 @@ void Board::unmakeMove(int color, Move move, MoveInfo moveInfo) {
     occupiedBB = occupiedBB + move.getFrom() - move.getTo();
     colorBB[color] = colorBB[color] + move.getFrom() - move.getTo();
     piece_list[move.getPiece()] = piece_list[move.getPiece()] + move.getFrom() - move.getTo();
-    int piece_color = color * NR_PIECES;
 
     if (move.getFlag() == Flag::CAPTURE) {
         occupiedBB += move.getTo();
@@ -107,12 +108,14 @@ void Board::unmakeMove(int color, Move move, MoveInfo moveInfo) {
         uint64_t king_from = move.getFrom();
         uint64_t king_to = move.getTo();
         if (king_from < king_to) { // castling short
-            uint64_t rook_shift = (king_to << 1) - (king_from << 1); // difference between rook_to (king_to << 1) and rook_from (king_from << 1) position
+            uint64_t rook_shift = (king_to << 1) - (king_from
+                    << 1); // difference between rook_to (king_to << 1) and rook_from (king_from << 1) position
             occupiedBB += rook_shift;
             colorBB[color] += rook_shift;
             piece_list[WHITE_ROOK + color * NR_PIECES] += rook_shift;
         } else { // castling long
-            uint64_t rook_shift = (king_from >> 1) - (king_to >> 2); // difference between rook_to (king_from >> 1) and rook_from (king_to >> 2) position
+            uint64_t rook_shift = (king_from >> 1) - (king_to
+                    >> 2); // difference between rook_to (king_from >> 1) and rook_from (king_to >> 2) position
             occupiedBB -= rook_shift;
             colorBB[color] -= rook_shift;
             piece_list[WHITE_ROOK + color * NR_PIECES] -= rook_shift;

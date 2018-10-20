@@ -5,7 +5,6 @@
 #include "../include/console.h"
 
 
-
 const string line = "-------------------------------------------------";
 const string split = "|     |     |     |     |     |     |     |     |";
 const int upper_case = 90;
@@ -17,7 +16,7 @@ Console::~Console() {
 }
 
 void Console::printBoard(int color, Board board, bool illegalMove) {
-   // clear screen
+    // clear screen
     printf("\033c");
 
     string turn = color == WHITE ? "WHITE'S TURN" : "BLACKS TURN";
@@ -26,7 +25,7 @@ void Console::printBoard(int color, Board board, bool illegalMove) {
 
     for (int i = 0; i < Board::RANKS; i++) {
         std::cout << line;
-        if (i == 4 && illegalMove == true)
+        if (i == 4 && illegalMove)
             std::cout << "    **  ILLEGAL MOVE  **";
         std::cout << std::endl << split << std::endl;
 
@@ -48,8 +47,8 @@ void Console::printBoard(int color, Board board, bool illegalMove) {
 void Console::printNodes(uint64_t nodes, double searchTime) {
     if (nodes != 0) {
         std::cout << nodes << " nodes    " << searchTime << " sec      "
-                  << (uint64_t)(nodes / (searchTime)) << " nodes/sec" << std::endl << std::endl;
-        Beep(523,500);
+                  << (uint64_t) (nodes / (searchTime)) << " nodes/sec" << std::endl << std::endl;
+        Beep(523, 500);
     }
 }
 
@@ -84,7 +83,7 @@ bool Console::isValidInput(string input) {
     return valid;
 }
 
-void Console::calculatePerft(bool divide,  int color, Board board, string input) {
+void Console::calculatePerft(bool divide, int color, Board board, string input) {
     int depth = input.back() - 48;
     Perft perft = Perft(divide, depth);
     uint64_t nodes = perft.calculate(color, board);

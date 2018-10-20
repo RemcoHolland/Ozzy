@@ -11,7 +11,7 @@ FenInfo FenReader::read(string fen) {
 
     char white_space = ' ';
 
-    uint64_t piece_list[TOTAL_PIECES] = { 0 };
+    uint64_t piece_list[TOTAL_PIECES] = {0};
     int color = 0;
     int castling_rights = 0;
     uint64_t enpassant_square = 0;
@@ -78,7 +78,6 @@ FenInfo FenReader::read(string fen) {
 
     for (; i < fen.length(); i++) {
         if (fen[i] == white_space) {
-            i++;
             break;
         } else {
             full_moves = 10 * full_moves + getNumber(fen[i]);

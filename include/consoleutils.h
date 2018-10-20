@@ -19,11 +19,17 @@
 class ConsoleUtils {
 public:
     ConsoleUtils();
+
     static char getPieceChar(uint64_t, Board);
+
     static char getPromotion(int);
+
     static int getSquare(char, char);
+
     static char getRank(int);
+
     static char getFile(int);
+
     ~ConsoleUtils();
 };
 

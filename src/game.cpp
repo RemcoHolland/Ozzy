@@ -29,10 +29,9 @@ void Game::play() {
 
         Move move;
         if (input == "e") {
-            illegalMove = false;
             move = getEngineMove(color, board);
         } else {
-            move = getUserMove(color, board, input);
+            move = getUserMove(input);
 
             if (!isLegalMove(movelist, move)) {
                 illegalMove = true;
@@ -55,7 +54,7 @@ void Game::changeColor() {
     color ^= 1;
 }
 
-Move Game::getUserMove(int side, Board board, string input) {
+Move Game::getUserMove(string input) {
     uint64_t from, to;
     Move move;
 
@@ -107,7 +106,7 @@ void Game::startClock() {
 }
 
 void Game::stopClock() {
-    searchTime = (std::clock() - startTime) / (double)CLOCKS_PER_SEC;
+    searchTime = (std::clock() - startTime) / (double) CLOCKS_PER_SEC;
 }
 
 Game::~Game() {

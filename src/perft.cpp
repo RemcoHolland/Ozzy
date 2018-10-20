@@ -37,7 +37,7 @@ void Perft::negaMax(int color, Board board, int depth) {
         if (!Square::isAttacked(color, board, board.getPiece(color == WHITE ? WHITE_KING : BLACK_KING))) {
             negaMax(color ^ 1, board, depth - 1);
 
-            if (divide == true && depth == search_depth) {
+            if (divide && depth == search_depth) {
                 printRootNodes(move);
                 root_nodes = 0;
             }
@@ -52,6 +52,8 @@ void Perft::printRootNodes(Move move) {
     int square_to = Utils::getLS1B(move.getTo());
     char promotion = ConsoleUtils::getPromotion(move.getPromotion());
 
-    std::cout << ConsoleUtils::getFile(square_from) << ConsoleUtils::getRank(square_from) << ConsoleUtils::getFile(square_to) << ConsoleUtils::getRank(square_to) << promotion << ' ' << root_nodes << std::endl;
+    std::cout << ConsoleUtils::getFile(square_from) << ConsoleUtils::getRank(square_from)
+              << ConsoleUtils::getFile(square_to) << ConsoleUtils::getRank(square_to) << promotion << ' ' << root_nodes
+              << std::endl;
 
 }

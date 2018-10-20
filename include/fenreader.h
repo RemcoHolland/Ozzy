@@ -7,6 +7,7 @@
 
 
 #pragma once
+
 #include <string>
 #include <cstdint>
 #include "piece.h"
@@ -22,14 +23,19 @@ using std::string;
 class FenReader {
 public:
     FenReader();
+
     // c++ can't return an array, only return a pointer to the array
     static FenInfo read(string fen);
+
     ~FenReader();
 
 private:
     static int getPiece(char);
+
     static int getCastlingRight(char);
+
     static uint64_t getEnpassantSquare(char, char);
+
     static int getNumber(char);
 };
 

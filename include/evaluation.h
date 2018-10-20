@@ -9,10 +9,13 @@
 #include "board.h"
 
 #pragma once
+
 class Evaluation {
 public:
     Evaluation();
+
     int getScore(Board);
+
     ~Evaluation();
 
 private:
@@ -24,6 +27,7 @@ private:
     const int KING_VALUE = 100;
 
     int materialScore(Board);
+
     int popCount(uint64_t);
 };
 

@@ -24,7 +24,9 @@ class Game {
 
 public:
     Game();
+
     void play();
+
     ~Game();
 
 private:
@@ -36,12 +38,19 @@ private:
     int full_moves = 0;
 
     void changeColor();
-    Move getUserMove(int, Board, string);
+
+    Move getUserMove(string);
+
     Move getEngineMove(int, Board);
+
     bool isLegalMove(Movelist, Move);
+
     Move getLegalMove(Movelist, Move);
+
     bool endOfGame();
+
     void startClock();
+
     void stopClock();
 };
 

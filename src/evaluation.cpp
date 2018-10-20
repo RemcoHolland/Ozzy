@@ -3,7 +3,6 @@
 //
 
 #include "../include/evaluation.h"
-#include "../include/piece.h"
 
 Evaluation::Evaluation() {
 }

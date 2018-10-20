@@ -15,11 +15,15 @@
 #include "moveinfo.h"
 
 #pragma once
+
 class Search {
 public:
     Search();
+
     uint64_t getNodes();
+
     Move getBestMove(int, Board);
+
     ~Search();
 
 private:
@@ -27,7 +31,9 @@ private:
     const int SEARCH_DEPTH = 3;
 
     uint64_t nodes = 0;
+
     int negaMax(int, Board, int);
+
     Move bestMove;
 };
 

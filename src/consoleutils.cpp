@@ -50,16 +50,16 @@ char ConsoleUtils::getPromotion(int piece) {
 }
 
 int ConsoleUtils::getSquare(char file, char rank) {
-    int square = (file - 97) + (rank - 49) * 8;	// 97 and 49 are ascii codes
+    int square = (file - 97) + (rank - 49) * 8;    // 97 and 49 are ascii codes
     return square;
 }
 
 char ConsoleUtils::getRank(int square) {
-    return (int)(square / 8) + 49;
+    return static_cast<char>((square / 8) + 49);
 }
 
 char ConsoleUtils::getFile(int square) {
-    return (int)(square % 8) + 97;;
+    return static_cast<char>((square % 8) + 97);
 }
 
 ConsoleUtils::~ConsoleUtils() {

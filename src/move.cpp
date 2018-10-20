@@ -32,10 +32,7 @@ Move::Move(int piece, uint64_t from, uint64_t to, Flag flag, int promotion) {
 }
 
 bool Move::operator==(const Move other) {
-    if (from == other.from && to == other.to) {
-        return true;
-    }
-    return false;
+    return from == other.from && to == other.to;
 }
 
 int Move::getPiece() {

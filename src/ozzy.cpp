@@ -4,8 +4,6 @@
 
 #include "../include/ozzy.h"
 
-#include "../include/magicmoves.h"
-
 
 int main() {
     initmagicmoves();

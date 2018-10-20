@@ -5,8 +5,6 @@
 #include "../include/generator.h"
 
 
-
-
 Generator::Generator() {
 }
 

@@ -25,7 +25,7 @@ int Search::negaMax(int color, Board board, int depth) {
         nodes++;
         Evaluation evaluation = Evaluation();
         // -color | 1 changes to 1 or -1 when color is either 0 or 1
-        return  (-color | 1) * evaluation.getScore(board);
+        return (-color | 1) * evaluation.getScore(board);
     }
     int max = -MAX_INT;
     Movelist movelist = Movelist();

@@ -7,10 +7,12 @@
 
 
 #pragma once
+
 class Generator {
 public:
     Generator();
-    void generateMoves();
+
+    // void generateMoves();
     ~Generator();
 };
 
